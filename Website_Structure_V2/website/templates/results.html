@@ -1,0 +1,82 @@
+{% extends "base.html" %} {% block content %} {% if
+current_user.is_authenticated %}
+<main role="main" class="container">
+  <div class="row">
+    <div class="col-md-8">
+    </div>
+    <div class="col-md-4">
+      <div class="content-section">
+        <h3>Insights</h3>
+        <p class='text-muted'>
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-light">Latest Contact (UTC): {{ contact.datestp }}</li>
+          <li class="list-group-item list-group-item-light">Contact Count: {{ contact_amount }}</li>
+          <li class="list-group-item list-group-item-light"><a href="/contact/results">Search/Update/Delete Contact</a></li>
+          <li class="list-group-item list-group-item-light"><a href="/contact/download">Download Contacts</a></li>
+          <li class="list-group-item list-group-item-light"><a href="/account">Update Account</a></li>
+        </ul>
+        </p>
+      </div>
+    </div>
+  </div>
+</main>
+<h2 align="center">Contact Information</h2>
+{% if contact in contacts %}
+        <li class="list-group-item list-group-item-light"></li>
+        <small class="text-muted">{{ contact.datestp.strftime('%Y-%m-%d') }}</small> 
+        <small class="text-muted">{{ contact.datestp.strftime('%H''%M''%S') }}</small>
+        </li
+        <p>
+          <li class="list-group-item list-group-item-light">
+           
+          </li>
+          <li class="list-group-item list-group-item-light">
+            Email: {% print contact.email %}
+          </li>
+          <li class="list-group-item list-group-item-light">
+            Name: {% print contact.first_name %} {% print contact.last_name %}
+          </li>
+          <li class="list-group-item list-group-item-light">
+            Phone: {% print contact.phone_number %}
+          </li>
+          <li class="list-group-item list-group-item-light">
+            Address: {% print contact.address %}
+          </li>
+          <li class="list-group-item list-group-item-light">
+            City: {% print contact.city %}
+          </li>
+          <li class="list-group-item list-group-item-light">
+            State: {% print contact.state %}
+          </li>
+          <br>
+        <form align="center"
+          action="{{ url_for('views.update_contact', contact_id=contact.id) }}" 
+          method="POST"
+        >
+          <input class="btn btn-primary" type="submit" value="Update" />
+        </form>
+        <br>
+        <form align="center"
+          action="{{ url_for('views.delete_contact', contact_id=contact.id) }}"
+          method="POST"
+        >
+          <input class="btn btn-danger" type="submit" value="Delete" />
+        </form>
+        <br>
+        <br>
+{% endif %} {% endif %}
+{{ pagination.info }}
+{{ pagination.links }}
+<table>
+  <tbody>
+    {% for contact in all_contacts %}
+      <tr>
+        <td>{{ loop.index + pagination.skip }}</td>
+        <td>{{ contact.last_name }}</td>
+        <td>{{ contact.email }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{{ pagination.links }}
+{% endblock content %}
