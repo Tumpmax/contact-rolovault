@@ -85,7 +85,6 @@ pydantic==1.8.2
 pyee==8.2.2
 Pygments==2.10.0
 pylint==2.7.4
-pyodbc==4.0.32
 pyparsing==2.4.7
 pyppeteer==0.2.6
 pyquery==1.4.3
