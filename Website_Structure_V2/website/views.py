@@ -13,17 +13,6 @@ from website import db, bcrypt
 
 views = Blueprint('views', __name__)
 
-
-@views.route('/')
-@login_required
-def home():
-    contact_amount = len(current_user.contacts)
-    all_contacts = Contact.query.all()
-    for contact in all_contacts:
-        contact.datestp
-        return render_template("home.html", all_contacts=all_contacts, contact=contact, contact_amount=contact_amount, user=current_user)
-    return render_template("home.html", all_contacts=all_contacts, contact_amount=contact_amount, user=current_user)
-
 @views.route('/signup', methods=['GET', 'POST'])
 def sign_up():
     form = SignupForm()
@@ -104,6 +93,16 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('views.login'))
+
+@views.route('/')
+@login_required
+def home():
+    contact_amount = len(current_user.contacts)
+    all_contacts = Contact.query.all()
+    for contact in all_contacts:
+        contact.datestp
+        return render_template("home.html", all_contacts=all_contacts, contact=contact, contact_amount=contact_amount, user=current_user)
+    return render_template("home.html", all_contacts=all_contacts, contact_amount=contact_amount, user=current_user)
 
 
 @views.route("/account", methods=['GET', 'POST'])
